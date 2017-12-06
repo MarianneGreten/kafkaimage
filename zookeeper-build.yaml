@@ -16,11 +16,12 @@ spec:
   source:
     type: Git
     git: 
-      uri: "http://bitbucket.generali-gruppe.de/projects/SD_ZAHLUNG/repos/kafkaimage"
+      uri: "http://bitbucket.generali-gruppe.de/projects/SD_ZAHLUNG/repos/kafkaimage"  
       ref: "master"
-    contextDir: "zookeeper" 
   strategy:
     type: Docker
+    dockerStrategy:
+      dockerfilePath: zookeeper/Dockerfile
   output:
     to:
       kind: ImageStreamTag
