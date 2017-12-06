@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: zookeeper
+  namespace: schaden-zahlung-aete
+  labels:
+    app: zookeeper
+    build: zookeeper
+spec:
+  triggers:
+    - type: ImageChange
+      imageChange:
+        lastTriggeredImageID: >-
+          172.30.219.129:5000/openshift/grape-spring-boot-base-image@sha256:9a8500a295d62731bdc571c2cf82dbddc74ba6d7410d686c3dfab1fa06716012
+  runPolicy: Serial
+  source:
+    type: Git
+    git: 
+      uri: "http://bitbucket.generali-gruppe.de/projects/SD_ZAHLUNG/repos/kafkaimage"
+      ref: "master"
+    contextDir: "zookeeper" 
+  strategy:
+    type: Docker
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'zookeeper:latest'
