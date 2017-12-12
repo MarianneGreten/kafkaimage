@@ -14,7 +14,7 @@ ENV KAFKA_VERSION=$kafka_version SCALA_VERSION=$scala_version
 RUN set -ex; \ 
 	curl -o /tmp/kafka.tgz "https://www.apache.org/dist/kafka/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz"; \
     mkdir -p /opt; \
-    tar xfz /tmp/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz -C /opt; \
+    tar xfz /tmp/kafka.tgz -C /opt; \
     rm /tmp/kafka.tgz; \
     ln -s /opt/kafka_${SCALA_VERSION}-${KAFKA_VERSION} /opt/kafka
 
