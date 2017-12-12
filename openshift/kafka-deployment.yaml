@@ -1,0 +1,63 @@
+kind: DeploymentConfig
+apiVersion: v1
+metadata:
+  name: kafka
+spec:
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+        - name: zookeeper
+          image: zookeeper
+          ports:
+            - containerPort: 2181
+              protocol: TCP
+            - containerPort: 2888
+              protocol: TCP
+          resources:
+            limits:
+              cpu: '1'
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 384Mi
+          imagePullPolicy: Always
+        - name: kafka
+          image: kafka
+          ports:
+            - containerPort: 9092
+              protocol: TCP
+          env:
+            - name: KAFKA_ZOOKEEPER_CONNECT
+              value: localhost:2181
+          resources:
+            limits:
+              cpu: '1'
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 512Mi
+          imagePullPolicy: Always
+  replicas: 1
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - zookeeper
+        from:
+          kind: ImageStreamTag
+          name: 'zookeeper:latest'
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - kafka
+        from:
+          kind: ImageStreamTag
+          name: 'kafka:latest'
+  strategy:
+    type: Rolling
