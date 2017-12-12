@@ -2,7 +2,7 @@ FROM registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
 
 USER root
 
-ENV KAFKA_HOME /opt/kafka \
+ENV KAFKA_HOME=/opt/kafka \
 	KAFKA_DATA=/var/lib/kafka
 ENV KAFKA_CONFIG_DIR=${KAFKA_HOME}/config
 
