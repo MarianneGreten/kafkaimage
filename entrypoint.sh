@@ -11,15 +11,22 @@ fi
 
 # This block adapted from the wurstmeister/kafka image:
 # https://github.com/wurstmeister/kafka-docker/blob/378d047b612df19a1f9b6e9bfb060e6507279148/start-kafka.sh#L35
-echo >> $KAFKA_HOME/config/server.properties
+
+#Variablen mit Präfix "KAFKA_" werden in Java Prperties für Kafka übersetzt: Präfix wird
+#entfernt, Großbuchstaben werden durch Kleinbuchstaben ersetzt, Unterstriche durch Punkte.
+#Wenn in der Datei server.properties diese Property schon enthalten ist, wird der Wert ersetzt,
+#Wenn diese Property noch nicht enthalten ist, wird sie der Datei hinzugefügt.
+#Bsp: KAFKA_LOG_DIRS wird in log.dirs übersetzt und in server.properties ergänzt.
+
+echo >> $KFK_HOME/config/server.properties
 for VAR in $(env); do
-    if [[ $VAR =~ ^KAFKA_ && ! $VAR =~ ^KAFKA_HOME ]]; then
+    if [ $VAR =~ ^KAFKA_ ]; then
         kafka_name=$(echo "$VAR" | sed -r "s/KAFKA_(.*)=.*/\1/g" | tr '[:upper:]' '[:lower:]' | tr _ .)
         env_var=$(echo "$VAR" | sed -r "s/(.*)=.*/\1/g")
-        if egrep -q "(^|^#)$kafka_name=" $KAFKA_HOME/config/server.properties; then
-            sed -r -i "s@(^|^#)($kafka_name)=(.*)@\2=${!env_var}@g" $KAFKA_HOME/config/server.properties #note that no config values may contain an '@' char
+        if egrep -q "(^|^#)$kafka_name=" $KFK_HOME/config/server.properties; then
+            sed -r -i "s@(^|^#)($kafka_name)=(.*)@\2=${!env_var}@g" $KFK_HOME/config/server.properties #note that no config values may contain an '@' char
         else
-            echo "$kafka_name=${!env_var}" >> $KAFKA_HOME/config/server.properties
+            echo "$kafka_name=${!env_var}" >> $KFK_HOME/config/server.properties
         fi
     fi
 done
