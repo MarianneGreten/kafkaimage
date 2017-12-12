@@ -12,7 +12,7 @@ ARG scala_version=2.12
 ENV KAFKA_VERSION=$kafka_version SCALA_VERSION=$scala_version
 
 RUN set -ex; \ 
-	curl -o /tmp/kafka.tgz "http://www.apache.org/dist/kafka/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz"; \
+	curl -o /tmp/kafka.tgz "https://www.apache.org/dist/kafka/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz"; \
     mkdir -p /opt; \
     tar xfz /tmp/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz -C /opt; \
     rm /tmp/kafka.tgz; \
