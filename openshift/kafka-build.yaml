@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: kafka
+  namespace: schaden-zahlung-aete
+  labels:
+    app: kafka
+    build: kafka
+spec:
+  runPolicy: Serial
+  source:
+    type: Git
+    git: 
+      uri: "https://github.com/MarianneGreten/kafkaimage.git"  
+      ref: "master"
+  strategy:
+    type: Docker
+    dockerStrategy:
+      from:
+        kind: "ImageStreamTag"
+        name: "openjdk18-openshift:latest"
+      dockerfilePath: docker/kafka/Dockerfile
+  triggers:
+    - type: ImageChange
+      imageChange: {}
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'kafka:latest'
+  resources:
+    limits:
+      cpu: '1'
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 256Mi
