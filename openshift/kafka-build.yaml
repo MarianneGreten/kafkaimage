@@ -13,13 +13,13 @@ spec:
     git: 
       uri: "https://github.com/MarianneGreten/kafkaimage.git"  
       ref: "master"
+    contextDir: "docker/kafka"
   strategy:
     type: Docker
     dockerStrategy:
       from:
         kind: "ImageStreamTag"
         name: "openjdk18-openshift:latest"
-      dockerfilePath: docker/kafka/Dockerfile
   triggers:
     - type: ImageChange
       imageChange: {}
