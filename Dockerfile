@@ -22,6 +22,7 @@ ENV PATH ${PATH}:${KAFKA_HOME}/bin
 
 # Location for the Kafka data files.
 #VOLUME [${KAFKA_DATA}]
+
 ENV KAFKA_LOG_DIRS=${KAFKA_DATA}/kafka-logs-
 
 ADD entrypoint.sh /bin/entrypoint.sh
