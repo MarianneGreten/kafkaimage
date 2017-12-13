@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: chisel
+  namespace: schaden-zahlung-aete
+  labels:
+    app: chisel
+    build: chisel
+spec:
+  runPolicy: Serial
+  source:
+    type: Git
+    git: 
+      uri: "https://github.com/MarianneGreten/kafkaimage.git"  
+      ref: "master"
+    contextDir: "docker/chisel"
+  strategy:
+    type: Docker
+    dockerStrategy:
+      from:
+        kind: "ImageStreamTag"
+        name: "openjdk18-openshift:latest"
+  triggers:
+    - type: ImageChange
+      imageChange: {}
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'chisel:latest'
+  resources:
+    limits:
+      cpu: '1'
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 256Mi

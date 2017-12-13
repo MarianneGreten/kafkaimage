@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ImageStream
+metadata:
+  name: chisel
+  namespace: schaden-zahlung-aete
+  labels:
+    app: chisel
+spec: {}
