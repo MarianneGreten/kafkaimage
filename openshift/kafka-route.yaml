@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Route
+metadata:
+  name: kafka-ocpt.generali-gruppe.de
+  labels:
+    app: kafka
+spec:
+  host: kafka-schaden-zahlung-aete.ocpt.generali-gruppe.de
+  to:
+    kind: Service
+    name: kafka
+    weight: 100
+  port:
+    targetPort: chisel-http
+  wildcardPolicy: None

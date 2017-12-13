@@ -6,9 +6,9 @@ metadata:
     app: kafka
 spec:
   ports:
-    - name: 9092-tcp
+    - name: chisel-http
       protocol: TCP
-      port: 9092
-      targetPort: 9092
+      port: 8080
+      targetPort: 8080
   selector:
     app: kafka
