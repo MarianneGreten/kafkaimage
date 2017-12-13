@@ -46,7 +46,7 @@ RUN set -ex; \
 WORKDIR ${ZOO_BASE}
 
 RUN set -ex; \
-    curl -o "$DISTRO_NAME.tar.gz" "https://www.apache.org/dist/zookeeper/$DISTRO_NAME/$DISTRO_NAME.tar.gz"; \
+    curl -o "$DISTRO_NAME.tar.gz" -L "https://www.apache.org/dist/zookeeper/$DISTRO_NAME/$DISTRO_NAME.tar.gz"; \
     tar -xzf "$DISTRO_NAME.tar.gz"; \
     mkdir -p "$ZOO_CONF_DIR" "$ZOO_DATA_DIR" "$ZOO_DATA_LOG_DIR"; \
     mv "$DISTRO_NAME/conf/"* "$ZOO_CONF_DIR"; \
