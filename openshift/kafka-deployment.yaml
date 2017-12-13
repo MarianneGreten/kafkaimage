@@ -40,6 +40,20 @@ spec:
               cpu: 100m
               memory: 512Mi
           imagePullPolicy: Always
+        - name: chisel
+          image: chisel
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              cpu: '1'
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 512Mi
+          imagePullPolicy: Always
+          
   replicas: 1
   triggers:
     - type: ConfigChange
@@ -59,5 +73,13 @@ spec:
         from:
           kind: ImageStreamTag
           name: 'kafka:latest'
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - chisel
+        from:
+          kind: ImageStreamTag
+          name: 'chisel:latest'
   strategy:
     type: Rolling
